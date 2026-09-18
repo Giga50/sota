@@ -3,36 +3,53 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Сота</title>
+<title>Сота — оператор связи</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FF0032">
+<link rel="apple-touch-icon" href="icon.png">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header class="hd"><div class="hi">
+<header class="hd">
+<div class="hi">
 <div class="lg" onclick="go('m')"><div class="lm">С</div>Сота</div>
 <nav class="nv" id="nv">
 <button data-p="m" class="on">Мобильная</button>
 <button data-p="h">Интернет</button>
+<button data-p="s">SIM</button>
 <button data-p="c">Кабинет</button>
 </nav>
-</div></header>
+<div class="hbal" id="hbal" onclick="go('c')">0 ₽</div>
+</div>
+</header>
 
+<!-- МОБИЛЬНАЯ -->
 <div class="pg on" id="pg-m">
-<div class="hr"><h1>Выбери свой <span>тариф</span></h1><p>Честные цены и связь без подводных камней.</p></div>
+<div class="hr">
+<h1>Выбери свой <span>тариф</span></h1>
+<p>Честные гигабайты без сгорания, безлимит внутри сети и защита от спама.</p>
+</div>
 <div class="fl" id="mf">
 <button class="on" data-f="all">Все</button>
 <button data-f="cheap">До 400 ₽</button>
 <button data-f="int">Много интернета</button>
+<button data-f="call">Много звонков</button>
+<button data-f="game">Игровые</button>
 </div>
 <div class="tars" id="mt"></div>
 </div>
 
+<!-- ДОМАШНИЙ -->
 <div class="pg" id="pg-h">
-<div class="hr"><h1>Домашний интернет <span>без лимитов</span></h1><p>До 1 Гбит/с для ПК и ТВ.</p></div>
-<div class="tg"><div id="ht">
+<div class="hr">
+<h1>Домашний интернет <span>без лимитов</span></h1>
+<p>До 1 Гбит/с для ПК, ТВ и умных устройств. Покрытие 5G по всей РФ.</p>
+</div>
+<div class="tg" id="ht">
 <button class="on" data-m="net">Интернет</button>
 <button data-m="tv">Интернет + ТВ</button>
-</div></div>
+</div>
 <div class="tars" id="htars"></div>
 <div class="tvc"><div>
 <h3>Сота ТВ — 200+ каналов</h3>
@@ -41,6 +58,39 @@
 </div></div>
 </div>
 
+<!-- SIM -->
+<div class="pg" id="pg-s">
+<div class="hr">
+<h1>Заказ <span>SIM-карты</span></h1>
+<p>Выберите красивый номер, укажите ФИО и активируйте профиль.</p>
+</div>
+
+<div class="sim-wrap">
+<div class="sim-step">
+<div class="step-num">1</div>
+<h3>Подбор красивого номера</h3>
+<div class="nums" id="nums"></div>
+</div>
+
+<div class="sim-step">
+<div class="step-num">2</div>
+<h3>Данные владельца</h3>
+<div class="fd"><label>ФИО</label><input type="text" id="fio" placeholder="Иванов Иван Иванович"></div>
+<div class="fd"><label>Дата рождения</label><input type="date" id="bdate"></div>
+<div class="fd"><label>Паспорт (серия и номер)</label><input type="text" id="passport" placeholder="0000 000000"></div>
+</div>
+
+<div class="sim-step">
+<div class="step-num">3</div>
+<h3>Начальный тарифный план</h3>
+<div class="nums" id="sim-tariffs"></div>
+<button class="bm" id="orderSim" disabled>Заказать SIM-карту</button>
+<div class="nt">Демо. SIM не будет доставлена.</div>
+</div>
+</div>
+</div>
+
+<!-- КАБИНЕТ -->
 <div class="pg" id="pg-c">
 <div class="lg2" id="ls"><div class="lb">
 <div class="lt">Сота</div><div class="ls">Личный кабинет</div>
@@ -57,25 +107,67 @@
 </div></div>
 
 <div class="cb" id="cb">
-<div class="bl"><div class="l">Баланс</div><div class="v" id="bv">0 <small>₽</small></div><button id="tu">Пополнить +500 ₽</button></div>
+<div class="ab-head">
+<div class="ab-avatar">А</div>
+<div>
+<div class="ab-name" id="abn">Абонент</div>
+<div class="ab-status">● Активен</div>
+</div>
+</div>
+<div class="ab-num">Активный номер: <b id="abphone">+7 (000) 000-00-00</b></div>
+
+<div class="bl">
+<div class="l">Текущий баланс</div>
+<div class="v" id="bv">0 <small>₽</small></div>
+<div class="limit">Лимит задолженности: −1 000 ₽</div>
+<button id="tu">Пополнить +500 ₽</button>
+</div>
+
 <div class="g2">
-<div class="cd"><h3>📦 Тариф</h3><div class="tn" id="tn">Медовый</div><div class="tp" id="tp">450 ₽ / мес</div><button class="ct" id="ct">Сменить</button></div>
-<div class="cd"><h3>📊 Остатки</h3>
-<div class="uu"><div class="uh"><span class="l">Минуты</span><span><span id="mu">0</span> / <span id="mt2">1000</span></span></div><div class="br"><div class="brf fm" id="mb" style="width:0%"></div></div></div>
-<div class="uu"><div class="uh"><span class="l">Интернет</span><span><span id="gu">0</span> / <span id="gt">30</span> ГБ</span></div><div class="br"><div class="brf fg" id="gb" style="width:0%"></div></div></div>
-<div class="uu"><div class="uh"><span class="l">СМС</span><span><span id="su">0</span> / <span id="st">100</span></span></div><div class="br"><div class="brf fs" id="sb" style="width:0%"></div></div></div>
-</div></div>
-<div class="cd"><h3>🧾 История</h3><ul class="hl" id="hs"></ul></div>
+<div class="cd">
+<h3>📦 Активный тариф</h3>
+<div class="tn" id="tn">Медовый</div>
+<div class="tp" id="tp">450 ₽ / мес</div>
+<button class="ct" id="ct">Сменить тариф</button>
+</div>
+<div class="cd">
+<h3>📊 Остатки</h3>
+<div class="uu">
+<div class="uh"><span class="l">Мобильный интернет</span><span><span id="gu">0</span> / <span id="gt">30</span> ГБ</span></div>
+<div class="br"><div class="brf fg" id="gb" style="width:0%"></div></div>
+</div>
+<div class="uu">
+<div class="uh"><span class="l">Минуты на все номера</span><span><span id="mu">0</span> / <span id="mt2">1000</span></span></div>
+<div class="br"><div class="brf fm" id="mb" style="width:0%"></div></div>
+</div>
+<div class="uu">
+<div class="uh"><span class="l">СМС</span><span><span id="su">0</span> / <span id="st">100</span></span></div>
+<div class="br"><div class="brf fs" id="sb" style="width:0%"></div></div>
+</div>
 </div>
 </div>
 
+<div class="cd">
+<h3>💳 Статус абонентской платы</h3>
+<div class="status-ok">✓ Оплачен до конца месяца</div>
+</div>
+
+<div class="cd">
+<h3>🧾 История операций</h3>
+<ul class="hl" id="hs"></ul>
+</div>
+</div>
+</div>
+
+<!-- МОДАЛКА ПОДКЛЮЧЕНИЯ -->
 <div class="mb" id="cm"><div class="md">
 <h2>Заявка принята ✓</h2>
-<p style="color:#7a7a7a;font-size:13px">Демо-режим. Тариф «<span id="mtn">—</span>» не будет подключён.</p>
+<p style="color:#7a7a7a;font-size:13px">Демо. Тариф «<span id="mtn">—</span>» не будет подключён.</p>
 <button class="bmd" onclick="closeM('cm');go('c')">В кабинет</button>
 <button class="bmd" style="background:#eee;color:#333" onclick="closeM('cm')">Закрыть</button>
 </div></div>
 
+<!-- МОДАЛКА СМЕНЫ ТАРИФА -->
 <div class="mb" id="chm"><div class="md">
 <h2>Смена тарифа</h2>
 <div id="tops" style="margin-top:14px"></div>
@@ -83,6 +175,14 @@
 <button class="bmd" style="background:#eee;color:#333" onclick="closeM('chm')">Отмена</button>
 </div></div>
 
+<!-- МОДАЛКА SIM -->
+<div class="mb" id="simm"><div class="md">
+<h2>SIM заказана ✓</h2>
+<p style="color:#7a7a7a;font-size:13px" id="siminfo">—</p>
+<button class="bmd" onclick="closeM('simm')">Понятно</button>
+</div></div>
+
+<!-- НИЖНЯЯ ПАНЕЛЬ -->
 <div class="bb" id="bb"><div class="bbi">
 <div><div class="l">Выбрано</div><div class="n" id="sn">—</div></div>
 <div style="display:flex;gap:10px;align-items:center">
@@ -93,5 +193,8 @@
 <div class="tst" id="tst">Готово</div>
 
 <script src="script.js"></script>
+<script>
+if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js")}
+</script>
 </body>
 </html>
